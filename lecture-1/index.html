@@ -1,0 +1,26 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Vue Web-Game!</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="root">
+      <div v-if="liked" v-on:click="handleButtonClick">좋아요!</div>
+      <button v-else v-on:click="handleButtonClick">Like!</button>
+    </div>
+    <script>
+      const app = new Vue({
+        el: '#root',
+        data: {
+          liked: false,
+        },
+        methods: {
+          handleButtonClick() {
+            this.liked = !this.liked;
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
