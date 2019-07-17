@@ -1,4 +1,4 @@
-# Lecture-5
+# Lecture-6
 child component ( props ), watch
 
 * child component
