@@ -16,8 +16,8 @@ export default new Vuex.Store({
     turn: 'O',
   }, // vue의 data property
   getters: {
-    turnMessage(state) {
-      return `${state.turn}님의 턴입니다.`;
+    message({ turn }) {
+      return `${turn}님의 턴입니다.`;
     },
   }, // vue의 computed
   mutations: {

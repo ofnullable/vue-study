@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div>{{ turnMessage }}</div>
+    <div>{{ message }}</div>
     <table-component>
       <tr v-for="(rowData, rowIndex) in tableData" :key="rowIndex">
         <td
@@ -18,7 +18,7 @@
 </template>
 
 <script>
-  import { mapState, mapGetters } from 'vuex';
+  import { mapState, mapGetters, mapMutations } from 'vuex';
 
   import store, {
     CLICK_CELL,
@@ -36,13 +36,20 @@
     },
     computed: {
       ...mapState(['tableData', 'turn', 'winner']),
-      ...mapGetters(['turnMessage']),
+      ...mapGetters(['message']),
     },
     methods: {
+      ...mapMutations({
+        clickCell: CLICK_CELL,
+        setWinner: SET_WINNER,
+        resetGame: RESET_GAME,
+        noWinner: NO_WINNER,
+        changeTurn: CHANGE_TURN,
+      }),
       handleTdClick(row, cell) {
         if (this.tableData[row][cell]) return;
 
-        this.$store.commit(CLICK_CELL, { row, cell });
+        this.clickCell({ row, cell });
 
         let win = false;
         if (
@@ -72,8 +79,8 @@
         }
 
         if (win) {
-          this.$store.commit(SET_WINNER, this.turn);
-          this.$store.commit(RESET_GAME);
+          this.setWinner(this.turn);
+          this.resetGame();
         } else {
           let all = true;
 
@@ -86,10 +93,10 @@
           });
 
           if (all) {
-            this.$store.commit(NO_WINNER);
-            this.$store.commit(RESET_GAME);
+            this.noWinner();
+            this.resetGame();
           } else {
-            this.$store.commit(CHANGE_TURN);
+            this.changeTurn();
           }
         }
       },
