@@ -6,7 +6,7 @@ vue는 Vue 인스턴스를 통해 데이터와 화면을 변경한다.
     <!--
         'v-' 가 붙은 속성에는 js코드를 넣을 수 있다! 
         v-if, v-else-if, v-else -> 특정 조건을 만족할 때 render 
-        v-on:click -> click event handler 
+        v-on:~ -> ~ event handler 
     -->
     <button v-if="liked" v-on:click="handleClick">좋아요!</button>
     <button v-else v-on:click="handleClick">Like!</button>
@@ -25,4 +25,6 @@ const app = new Vue({
     }
 })
 ```
+  
+Vue에서 data를 html element에 바인딩하기 위해서는 v-model을 사용한다.
 

@@ -32,7 +32,9 @@
             if (this.first * this.second === Number(this.value)) {
               this.result = '정답!';
               this.newQuestion();
-            } else this.result = '땡!';
+            } else {
+              this.result = '땡!';
+            }
 
             this.value = '';
             this.$refs.answer.focus();

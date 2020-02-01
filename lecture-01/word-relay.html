@@ -11,6 +11,7 @@
         <input type="text" v-model="value" ref="answer" />
         <button type="submit">입력</button>
       </form>
+      <div>{{ result }}</div>
     </div>
     <script>
       const app = new Vue({
@@ -21,7 +22,8 @@
           result: '',
         },
         methods: {
-          handleSubmit() {
+          handleSubmit(e) {
+            e.preventDefault();
             if (this.word[this.word.length - 1] === this.value[0]) {
               this.word = this.value;
               this.result = '정답!';
