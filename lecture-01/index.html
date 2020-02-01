@@ -6,8 +6,8 @@
   </head>
   <body>
     <div id="root">
-      <div v-if="liked" v-on:click="handleButtonClick">좋아요!</div>
-      <button v-else v-on:click="handleButtonClick">Like!</button>
+      <button v-if="liked" v-on:click="handleClick">좋아요!</button>
+      <button v-else v-on:click="handleClick">Like!</button>
     </div>
     <script>
       const app = new Vue({
@@ -16,7 +16,7 @@
           liked: false,
         },
         methods: {
-          handleButtonClick() {
+          handleClick() {
             this.liked = !this.liked;
           },
         },
