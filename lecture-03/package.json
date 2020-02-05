@@ -1,12 +1,12 @@
 {
-  "name": "lecture-3",
+  "name": "lecture-03",
   "version": "1.0.0",
   "description": "",
   "main": "main.js",
   "scripts": {
     "build": "webpack"
   },
-  "author": "joonak",
+  "author": "ofnullable",
   "license": "MIT",
   "dependencies": {
     "vue": "^2.6.10"
