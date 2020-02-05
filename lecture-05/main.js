@@ -1,5 +1,5 @@
 import Vue from 'vue';
 
-import RSP from './RSP';
+import RockScissorsPaper from './RockScissorsPaper';
 
-new Vue(RSP).$mount('#root');
+new Vue(RockScissorsPaper).$mount('#root');

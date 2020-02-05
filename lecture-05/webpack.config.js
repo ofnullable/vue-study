@@ -1,7 +1,6 @@
 const path = require('path');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
-// webpack -> script를 하나로 만들어주는 모듈
 module.exports = {
   mode: 'development',
   devtool: 'eval',
@@ -12,17 +11,13 @@ module.exports = {
     app: path.join(__dirname, 'main.js'),
   },
   module: {
-    // webpack의 핵심
-    rules: [
-      {
+    rules: [{
         test: /\.vue$/,
         use: 'vue-loader',
-      },
-      {
+      }, {
         test: /\.css$/,
         use: ['vue-style-loader', 'css-loader'],
-      },
-    ],
+      }],
   },
   plugins: [new VueLoaderPlugin()],
   output: {
