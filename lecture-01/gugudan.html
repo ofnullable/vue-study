@@ -1,18 +1,18 @@
 <html>
   <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8"/>
     <title>구구단</title>
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   </head>
   <body>
     <div id="root">
       <div>{{ `${first} 곱하기 ${second}는?` }}</div>
       <form v-on:submit="handleSubmit">
-        <input type="number" v-model="value" ref="answer" />
+        <input type="number" v-model="value" ref="answer"/>
         <button type="submit">입력</button>
       </form>
       <div id="result">{{ result }}</div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script>
       const app = new Vue({
         el: '#root',

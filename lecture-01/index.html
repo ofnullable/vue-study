@@ -1,14 +1,14 @@
-<html>
+<html lang="ko">
   <head>
-    <meta charset="UTF-8" />
-    <title>Vue Web-Game!</title>
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <meta charset="UTF-8"/>
+    <title>좋아요!</title>
   </head>
   <body>
     <div id="root">
-      <button v-if="liked" v-on:click="handleClick">좋아요!</button>
-      <button v-else v-on:click="handleClick">Like!</button>
+      <button v-if="liked" v-on:click="toggleLiked">liked!</button>
+      <button v-else v-on:click="toggleLiked">like!!</button>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script>
       const app = new Vue({
         el: '#root',
@@ -16,7 +16,7 @@
           liked: false,
         },
         methods: {
-          handleClick() {
+          toggleLiked() {
             this.liked = !this.liked;
           },
         },
