@@ -1,4 +1,4 @@
 # vue-study
 
-[ZeroCho님의 Youtube강의](https://www.youtube.com/watch?v=V3QsSrldHqI&list=PLcqDmjxt30RtqbStQqk-eYMK8N-1SYIFn)
+[ZeroCho님의 Youtube강의](https://www.youtube.com/playlist?list=PLcqDmjxt30RsdnPeU0ogHFMoggSQ_d7ao)
 실습
