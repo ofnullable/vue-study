@@ -1,19 +1,9 @@
 <template>
   <div>
-    <div id="screen" :class="state" @click="handleScreenClick">
-      {{ message }}
-    </div>
-    <!-- 
-      v-show, v-if는 tag가 존재하는지 아닌지로 구분할 수 있다.
-      v-if는 tag도 없고 (주석처리 처럼)
-      v-show 는 display:none; 처리 된다.
-    -->
+    <div id="screen" :class="state" @click="handleClickScreen">{{ message }}</div>
     <template v-show="result.length">
-      <div>
-        평균 시간:
-        {{ average }}ms
-      </div>
-      <button @click="handleButtonClick">리셋</button>
+      <div>평균시간: {{ average }}ms</div>
+      <button @click="handleReset">리셋</button>
     </template>
   </div>
 </template>
@@ -23,37 +13,37 @@
   let endTime = 0;
   let timeout = null;
   export default {
-    data() {
-      return {
-        state: 'waiting',
-        message: '클릭해서 시작하세요!',
-        result: [],
-      };
-    },
-    // 값을 캐싱할 수 있다.
     computed: {
       average() {
         return this.result.reduce((a, c) => a + c, 0) / this.result.length || 0;
       },
     },
+    data() {
+      return {
+        result: [],
+        state: 'waiting',
+        message: '클릭해서 시작하세요!',
+      };
+    },
     methods: {
-      handleButtonClick(e) {
+      handleReset() {
         this.result = [];
       },
-      handleScreenClick() {
+      handleClickScreen() {
         if (this.state === 'waiting') {
           this.state = 'ready';
           this.message = '초록색이 되면 클릭하세요!';
 
           timeout = setTimeout(() => {
             this.state = 'now';
-            this.message = '지금 클릭!!!';
+            this.message = '지금! 클릭하세요!!';
             startTime = new Date();
           }, Math.floor(Math.random() * 1000) + 2000);
+
         } else if (this.state === 'ready') {
           clearTimeout(timeout);
           this.state = 'waiting';
-          this.message = '너무 성급하셨네요! 초록색이 될때까지 기다려주세요.';
+          this.message = '너무 성급했어요! 초록색이 된 이후에 클릭하세요.';
         } else if (this.state === 'now') {
           endTime = new Date();
           this.state = 'waiting';
@@ -67,19 +57,21 @@
 
 <style scoped>
   #screen {
-    width: 500px;
-    height: 500px;
+    width: 30rem;
+    height: 30rem;
     text-align: center;
     user-select: none;
-    color: white;
   }
+
   #screen.waiting {
-    background-color: blue;
+    background-color: dodgerblue;
   }
+
   #screen.ready {
-    background-color: red;
+    background-color: mediumvioletred;
   }
+
   #screen.now {
-    background-color: green;
+    background-color: seagreen;
   }
 </style>
