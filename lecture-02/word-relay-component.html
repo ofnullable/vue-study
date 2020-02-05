@@ -1,8 +1,7 @@
-<html>
+<html lang="ko">
   <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8"/>
     <title>끝말잇기</title>
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   </head>
   <body>
     <div id="root">
@@ -10,17 +9,18 @@
       <word-relay start-word="중수"></word-relay>
       <word-relay start-word="고수"></word-relay>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script>
       Vue.component('word-relay', {
         template: `
-        <div>
-          <div>{{ word }}</div>
-          <form v-on:submit="handleSubmit">
-            <input type="text" v-model="value" ref="answer" />
-            <button type="submit">입력</button>
-          </form>
-          <div>{{ result }}</div>
-        </div>
+          <div>
+            <div>{{ word }}</div>
+            <form v-on:submit="handleSubmit">
+              <input type="text" v-model="value" ref="answer">
+              <button type="submit">입력!</button>
+            </form>
+            <div>{{ result }}</div>
+          </div>
         `,
         props: ['startWord'],
         data() {

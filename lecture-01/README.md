@@ -28,5 +28,5 @@ const app = new Vue({
 })
 ```
   
-`Vue의 data를 html element에 바인딩하기 위해서는 v-model을 사용한다.
+Vue의 data를 html element에 바인딩하기 위해서는 v-model을 사용한다.
 
