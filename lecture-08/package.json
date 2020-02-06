@@ -1,5 +1,5 @@
 {
-  "name": "lecture-8",
+  "name": "lecture-08",
   "version": "1.0.0",
   "description": "",
   "main": "main.js",
@@ -7,7 +7,7 @@
     "build": "webpack --watch",
     "dev": "webpack-dev-server --hot"
   },
-  "author": "joonak",
+  "author": "ofnullable",
   "license": "MIT",
   "dependencies": {
     "vue": "^2.6.10"

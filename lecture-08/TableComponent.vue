@@ -1,10 +1,10 @@
 <template>
   <table>
     <tr-component
-      v-for="(rowData, index) in tableData"
-      :row-data="rowData"
-      :row-index="index"
-      :key="index"
+        v-for="(rowData, index) in tableData"
+        :row-data="rowData"
+        :row-index="index"
+        :key="index"
     />
   </table>
 </template>

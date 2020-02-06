@@ -4,6 +4,7 @@
 
 <script>
   import EventBus from './EventBus';
+
   export default {
     props: {
       cellData: String,
@@ -14,7 +15,7 @@
       handleTdClick() {
         if (this.cellData) return;
 
-        EventBus.$emit('onTdClick', this.rowIndex, this.cellIndex);
+        EventBus.$emit('clickTd', this.rowIndex, this.cellIndex);
       },
     },
   };
