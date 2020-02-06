@@ -1,37 +1,32 @@
 <template>
   <div>
-    <h1>당첨 숫자</h1>
-    <div id="result">
-      <lotto-ball v-for="ball in winBalls" :key="ball" :number="ball" />
+    <div>당첨숫자</div>
+    <div>
+      <lotto-ball v-for="ball in winBalls" :key="ball" :number="ball"/>
     </div>
-    <h2>보너스!</h2>
-    <lotto-ball v-if="bonus" :number="bonus" />
-    <button v-if="redo" @click="handleClickRedo">
-      한번 더!
-    </button>
+    <div>보너스</div>
+    <lotto-ball v-if="bonus" :number="bonus"/>
+    <button v-if="redo" @click="handleRedo">한번 더!</button>
   </div>
 </template>
 
 <script>
   import LottoBall from './LottoBall';
 
+  const timeouts = [];
+
   const getWinNumbers = () => {
-    console.log('get win numbers!');
-    const candidate = Array(45)
-      .fill()
-      .map((v, i) => i + 1);
-    const shuffled = [];
+    console.log('generate win numbers...');
+    const candidate = Array(45).fill().map((v, i) => i + 1);
+    const shuffle = [];
     while (candidate.length > 0) {
-      shuffled.push(
-        candidate.splice(Math.floor(Math.random() * candidate.length), 1)[0]
-      );
+      shuffle.push(candidate.splice(Math.floor(Math.random() * candidate.length), 1)[0]);
     }
-    const bonusNumber = shuffled[shuffled.length - 1];
-    const winNumbers = shuffled.slice(0, 6).sort((p, c) => p - c);
-    return [...winNumbers, bonusNumber];
+    const bonusNumber = shuffle[shuffle.length - 1];
+    const windNumbers = shuffle.slice(0, 6).sort((a, b) => a - b);
+    return [...windNumbers, bonusNumber];
   };
 
-  const timeouts = [];
   export default {
     components: {
       LottoBall,
@@ -44,14 +39,7 @@
         redo: false,
       };
     },
-    computed: {},
     methods: {
-      handleClickRedo() {
-        this.winNumbers = getWinNumbers();
-        this.winBalls = [];
-        this.bonus = null;
-        this.redo = false;
-      },
       showBalls() {
         for (let i = 0; i < this.winNumbers.length - 1; i++) {
           timeouts[i] = setTimeout(() => {
@@ -61,22 +49,24 @@
         timeouts[6] = setTimeout(() => {
           this.bonus = this.winNumbers[6];
           this.redo = true;
-        }, 3500);
+        }, 7 * 500);
+      },
+      handleRedo() {
+        this.winNumbers = getWinNumbers();
+        this.winBalls = [];
+        this.bonus = null;
+        this.redo = false;
       },
     },
     mounted() {
-      console.log('mounted');
       this.showBalls();
     },
     beforeDestroy() {
-      console.log('before destroy');
-      timeouts.forEach(t => {
-        clearTimeout(t);
-      });
+      timeouts.forEach(t => clearTimeout(t));
     },
     watch: {
-      bonus(value, oldValue) {
-        if (value === null) {
+      redo(value, _) {
+        if (!value) {
           this.showBalls();
         }
       },
@@ -85,4 +75,5 @@
 </script>
 
 <style scoped>
+
 </style>

@@ -1,20 +1,35 @@
-# Lecture-6
-child component ( props ), watch
+# Lecture-06
+* child component 와 props, 그리고 watch
 
-* child component
+* child component 와 props  
 
-import 후 아래와 같이 작성하여 다른 Component를 사용할 수 있다.
-```js 
-import PascalCase from './PascalCase';
+따로 작성한 컴포넌트를 import 후 아래와 같이 작성하면 child component로 사용할 수 있다. 
+```vue
+<template>
+  <div>
+    <component-name :props="props"></component-name>
+  </div>
+</template>
 
-export default {
-  components: {
-    'kebab-case': PascalCase,  // kebab-case부분에 다른 이름을 줄 수 있음.
-    PascalCase,                // 같은 이름을 사용할거라면 컴포넌트 이름만 작성해도 무방
+<script>
+  import ComponentName from './ComponentName'; // 
+
+  export default {
+    components: {
+      'component-name': ComponentName,  // 원하는 이름으로 변경할 수 있다!
+      ComponentName,                // 같은 이름으로 사용할거면 컴포넌트 이름만 작성할 수 있다. (자동으로 변경해준다)
+    },
+    data() {
+      return {
+        props: 'props'
+      }
+    }
   }
-}
+</script>
 ```
+컴포넌트에서 `name`옵션은 재귀적인 컴포넌트에서는 필수적이고, 그렇지 않은경우에는 vue-devtools에서 유용하다. (크게 필요하지 않다는 뜻)
 
 * watch
 
-watch라는 property에 state와 같은 이름의 메서드를 작성하면 특정 조건에 원하는 함수를 실행하는 등의 동작을 수행할 수 있다. 하지만 권장사항이 아니므로 어쩔 수 없는 경우에만 사용하도록 하자.
+watch는 data와 같은 이름의 메서드를 작성하면 특정 조건에 원하는 기능을 실행시킬 수 있다. 
+하지만 코드가 복잡해질 우려가 있으므로 다른 방법이 없는 경우에만 사용하도록 하자.
