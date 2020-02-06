@@ -1,10 +1,10 @@
 <template>
   <table>
     <tr-component
-      v-for="(rowData, index) in tableData"
-      :row-data="rowData"
-      :row-index="index"
-      :key="index"
+        v-for="(rowData, index) in tableData"
+        :key="index"
+        :row-data="rowData"
+        :row-index="index"
     />
   </table>
 </template>
@@ -13,15 +13,19 @@
   import TrComponent from './TrComponent';
 
   export default {
-    components: {
-      TrComponent,
-    },
     props: {
       tableData: Array,
     },
-    computed: {},
+    components: {
+      TrComponent,
+    },
+    data() {
+      return {};
+    },
+    methods: {},
   };
 </script>
 
 <style scoped>
+
 </style>

@@ -1,75 +1,72 @@
 <template>
-  <td @click="handleClick">{{ cellData }}</td>
+  <td @click="handleTdClick">{{ cellData }}</td>
 </template>
 
 <script>
   export default {
     props: {
+      rowIndex: Number,
       cellData: String,
       cellIndex: Number,
-      rowIndex: Number,
     },
     methods: {
-      handleClick() {
-        console.log(this.$root.$data);
-        console.log(this.$parent.$data);
+      handleTdClick() {
+        if (this.cellData) return;
 
-        const data = this.$root.$data;
-        const { rowIndex, cellIndex } = this;
+        // 아래 방식은 데이터는 변경되지만 화면에는 반영되지 않는다.
+        // this.$root.$data.tableData[this.rowIndex][this.cellIndex] = this.$root.$data.turn;
+        const rootData = this.$root.$data;
 
-        if (data.tableData[rowIndex][cellIndex]) {
-          return;
-        }
-        this.$set(data.tableData[rowIndex], cellIndex, data.turn);
+        // Vue.set(배열, 인덱스, 변경할 값); 을 사용해라!
+        this.$set(rootData.tableData[this.rowIndex], this.cellIndex, rootData.turn);
 
         let win = false;
+
         if (
-          data.tableData[rowIndex][0] === data.turn &&
-          data.tableData[rowIndex][1] === data.turn &&
-          data.tableData[rowIndex][2] === data.turn
+            rootData.tableData[this.rowIndex][0] === rootData.turn &&
+            rootData.tableData[this.rowIndex][1] === rootData.turn &&
+            rootData.tableData[this.rowIndex][2] === rootData.turn
         ) {
           win = true;
         } else if (
-          data.tableData[0][cellIndex] === data.turn &&
-          data.tableData[1][cellIndex] === data.turn &&
-          data.tableData[2][cellIndex] === data.turn
+            rootData.tableData[0][this.cellIndex] === rootData.turn &&
+            rootData.tableData[1][this.cellIndex] === rootData.turn &&
+            rootData.tableData[2][this.cellIndex] === rootData.turn
         ) {
           win = true;
         } else if (
-          data.tableData[0][0] === data.turn &&
-          data.tableData[1][1] === data.turn &&
-          data.tableData[2][2] === data.turn
+            rootData.tableData[0][0] === rootData.turn &&
+            rootData.tableData[1][1] === rootData.turn &&
+            rootData.tableData[2][2] === rootData.turn
         ) {
           win = true;
         } else if (
-          data.tableData[0][2] === data.turn &&
-          data.tableData[1][1] === data.turn &&
-          data.tableData[2][0] === data.turn
+            rootData.tableData[0][2] === rootData.turn &&
+            rootData.tableData[1][1] === rootData.turn &&
+            rootData.tableData[2][0] === rootData.turn
         ) {
           win = true;
         }
 
         if (win) {
-          data.winner = data.turn;
-          data.turn = 'O';
-          data.tableData = [['', '', ''], ['', '', ''], ['', '', '']];
+          rootData.winner = rootData.turn;
+          rootData.tableData = [['', '', ''], ['', '', ''], ['', '', '']];
+          rootData.turn = 'O';
         } else {
           let all = true;
 
-          data.tableData.forEach(row => {
+          rootData.tableData.forEach(row => {
             row.forEach(cell => {
-              if (!cell) {
-                all = false;
-              }
+              if (!cell) all = false;
             });
           });
 
           if (all) {
-            data.winner = '';
-            data.turn = 'O';
-            data.tableData = [['', '', ''], ['', '', ''], ['', '', '']];
+            rootData.turn = 'O';
+            rootData.winner = '';
+            rootData.tableData = [['', '', ''], ['', '', ''], ['', '', '']];
           } else {
-            data.turn = data.turn === 'O' ? 'X' : 'O';
+            rootData.turn = rootData.turn === 'O' ? 'X' : 'O';
           }
         }
       },
@@ -77,5 +74,6 @@
   };
 </script>
 
-<style>
+<style scoped>
+
 </style>

@@ -1,11 +1,11 @@
 <template>
   <tr>
     <td-component
-      v-for="(cellData, index) in rowData"
-      :row-index="rowIndex"
-      :cell-data="cellData"
-      :cell-index="index"
-      :key="index"
+        v-for="(cellData, index) in rowData"
+        :key="index"
+        :cell-data="cellData"
+        :row-index="rowIndex"
+        :cell-index="index"
     />
   </tr>
 </template>
@@ -14,20 +14,22 @@
   import TdComponent from './TdComponent';
 
   export default {
+    props: {
+      rowData: Array,
+      rowIndex: Number,
+    },
     components: {
       TdComponent,
     },
     data() {
       return {
-        parent: '!',
+        parent: '내가 니 애비다.'
       };
     },
-    props: {
-      rowData: Array,
-      rowIndex: Number,
-    },
+    methods: {},
   };
 </script>
 
-<style>
+<style scoped>
+
 </style>
