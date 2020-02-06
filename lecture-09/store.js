@@ -11,19 +11,20 @@ export const RESET_GAME = 'RESET_GAME';
 
 export default new Vuex.Store({
   state: {
-    tableData: [['', '', ''], ['', '', ''], ['', '', '']],
-    winner: '',
+    tableData: [
+      ['', '', ''],
+      ['', '', ''],
+      ['', '', ''],
+    ],
     turn: 'O',
-  }, // vue의 data property
+    winner: '',
+  },
   getters: {
-    message({ turn }) {
-      return `${turn}님의 턴입니다.`;
+    message(state) {
+      return `${state.turn}님이 승리하셨습니다!`;
     },
-  }, // vue의 computed
+  }, // vue의 computed와 유사
   mutations: {
-    [NO_WINNER](state) {
-      state.winner = '';
-    },
     [SET_WINNER](state, winner) {
       state.winner = winner;
     },
@@ -34,8 +35,16 @@ export default new Vuex.Store({
       state.turn = state.turn === 'O' ? 'X' : 'O';
     },
     [RESET_GAME](state) {
-      (state.turn = 'O'), (state.tableData = [['', '', ''], ['', '', ''], ['', '', '']]);
+      state.turn = 'O';
+      state.tableData = [
+        ['', '', ''],
+        ['', '', ''],
+        ['', '', ''],
+      ];
     },
-  }, // state를 동기적으로 수정할 때 사용
+    [NO_WINNER](state) {
+      state.winner = '';
+    },
+  }, // redux의 action?
   actions: {}, // state를 비동기적으로 수정할 때 또는 여러 mutaion을 연달아 실행할 때 사용
 });

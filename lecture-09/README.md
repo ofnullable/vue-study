@@ -1,20 +1,25 @@
-# Lecture-9
+# Lecture-09
 
 * vuex
-  - `state:` redux의 initialState
-  - `getters:` 이건 redux에서 못본거같은데 state들로 쿵짝쿵짝할 떄 사용하는듯..
-  - `mutations:` redux의 action?
-  - `actions:` 이것도 처음 보는 개념인거같은데 사용은 안해봤다. 여러 mutation을 연달아 사용하거나 비동기 작업을 수행할 때 사용한다고 함..
+  * `state`
+  * `getters` vue에서 computed와 같은 역할을 한다.
+  * `mutations:` redux의 action..?
+  * `actions:` 이것도 처음 보는 개념인거같은데 사용은 안해봤다. 여러 mutation을 연달아 사용하거나 비동기 작업을 수행할 때 사용한다고 함..
 
 * slot
-  - parent component로 부터 받은 component를 rendering하기 위해 사용된다.
-  - react의 children과 유사  
+  * react의 children과 유사
+  * parent component로 부터 받은 component를 rendering하기 위해 사용된다.
+  * slot 위치에 아무것도 오지 않았을 때의 기본값을 적어줄 수도 있다.
 
-* 한눈에 보는 간단한 vuex설정 코드
-```shell
-// shell
+* mapState, mapGetters, mapMutations, mapActions...
+  * Vuex의 속성들을 편하게 가져올 수 있는 함수들!
+  * 기본적으로는 이름을 문자열로 작성하고, 함수로 작성하면 이름을 바꿔서 사용할 수도 있다.
+  * 자세한 내용은 공식 문서를 참조하자.
+
+```console
 > npm i vuex
 ```
+
 ```js
 // store.js
 import Vue from 'vue';
@@ -22,11 +27,10 @@ import Vuex from 'vuex';
 
 Vue.use(Vuex);
 
-export const SOME_ACTION_NAME = 'SOME_ACTION';
+export const SOME_ACTION = 'SOME_ACTION';
 
 export default new Vuex.Store({
   state: {
-    // initial states
     foo: 'foo',
     bar: 'bar',
   },
@@ -35,8 +39,8 @@ export default new Vuex.Store({
       return `${state.foo} ${state.bar}`;
     },
   },
-  mutaions: {
-    [SOME_ACTION_NAME](state, arg) {
+  mutations: {
+    [SOME_ACTION](state, arg) {
       state.foo = arg;
     },
   },
@@ -46,7 +50,7 @@ export default new Vuex.Store({
 });
 ```
 
-```js
+```vue
 // component.vue
 <template>
   <!-- templates -->
@@ -65,9 +69,9 @@ export default new Vuex.Store({
       ...mapMutations({
         someAction: SOME_ACTION_NAME,
       }),
-      handleEvent(e) {
-        e.preventDefault();
-        this.someAction('param')
+      // ...mapActions?
+      handleEvent() {
+        this.someAction('arg')
       },
     }
     // ...vue properties

@@ -4,22 +4,23 @@
     <table-component>
       <tr v-for="(rowData, rowIndex) in tableData" :key="rowIndex">
         <td
-          @click="handleTdClick(rowIndex, cellIndex)"
-          v-for="(cellData, cellIndex) in rowData"
-          :key="cellIndex"
+            @click="handleTdClick(rowIndex, cellIndex)"
+            v-for="(cellData, cellIndex) in rowData"
+            :key="cellIndex"
         >
           {{ cellData }}
         </td>
       </tr>
     </table-component>
 
-    <div v-if="winner">{{ winner }}님의 승리!</div>
+    <div v-if="winner">{{ message }}</div>
   </div>
 </template>
 
 <script>
   import { mapState, mapGetters, mapMutations } from 'vuex';
 
+  import TableComponent from './TableComponent';
   import store, {
     CLICK_CELL,
     SET_WINNER,
@@ -27,7 +28,6 @@
     NO_WINNER,
     CHANGE_TURN,
   } from './store';
-  import TableComponent from './TableComponent';
 
   export default {
     store,
@@ -53,27 +53,27 @@
 
         let win = false;
         if (
-          this.tableData[row][0] === this.turn &&
-          this.tableData[row][1] === this.turn &&
-          this.tableData[row][2] === this.turn
+            this.tableData[row][0] === this.turn &&
+            this.tableData[row][1] === this.turn &&
+            this.tableData[row][2] === this.turn
         ) {
           win = true;
         } else if (
-          this.tableData[0][cell] === this.turn &&
-          this.tableData[1][cell] === this.turn &&
-          this.tableData[2][cell] === this.turn
+            this.tableData[0][cell] === this.turn &&
+            this.tableData[1][cell] === this.turn &&
+            this.tableData[2][cell] === this.turn
         ) {
           win = true;
         } else if (
-          this.tableData[0][0] === this.turn &&
-          this.tableData[1][1] === this.turn &&
-          this.tableData[2][2] === this.turn
+            this.tableData[0][0] === this.turn &&
+            this.tableData[1][1] === this.turn &&
+            this.tableData[2][2] === this.turn
         ) {
           win = true;
         } else if (
-          this.tableData[0][2] === this.turn &&
-          this.tableData[1][1] === this.turn &&
-          this.tableData[2][0] === this.turn
+            this.tableData[0][2] === this.turn &&
+            this.tableData[1][1] === this.turn &&
+            this.tableData[2][0] === this.turn
         ) {
           win = true;
         }
@@ -108,6 +108,7 @@
   table {
     border-collapse: collapse;
   }
+
   td {
     border: 1px solid limegreen;
     width: 100px;
