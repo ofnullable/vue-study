@@ -22,6 +22,34 @@ export const CODE = {
   OPENED: 0,
 };
 
+const checkSurroundingMines = (data, row, cell) => {
+  const temp = [];
+
+  if (data[row - 1]) {
+    temp.push(data[row - 1][cell - 1], data[row - 1][cell], data[row - 1][cell + 1]);
+  }
+  temp.push(data[row][cell - 1], data[row][cell + 1]);
+  if (data[row + 1]) {
+    temp.push(data[row + 1][cell - 1], data[row + 1][cell], data[row + 1][cell + 1]);
+  }
+
+  return temp.filter(v => [CODE.MINE, CODE.FLAG_MINE, CODE.QUESTION_MINE].includes(v)).length;
+};
+
+const getNearCells = (row, cell, rowLength) => {
+  const temp = [];
+
+  if (row - 1 > -1) {
+    temp.push([row - 1, cell - 1], [row - 1, cell], [row - 1, cell + 1]);
+  }
+  temp.push([row, cell - 1], [row, cell + 1]);
+  if (row + 1 < rowLength) {
+    temp.push([row + 1, cell - 1], [row + 1, cell], [row + 1, cell + 1]);
+  }
+
+  return temp;
+};
+
 const plantMine = (row, cell, mine) => {
   const candidate = Array(row * cell).fill().map((_, i) => i);
   const shuffle = [];
@@ -47,7 +75,6 @@ const plantMine = (row, cell, mine) => {
     data[ver][hor] = CODE.MINE;
   }
 
-  console.log(data);
   return data;
 };
 
@@ -62,6 +89,7 @@ export default new Vuex.Store({
     timer: 0,
     result: '',
     halted: true,
+    openedCell: 0,
   },
   getters: {},
   mutations: {
@@ -70,11 +98,62 @@ export default new Vuex.Store({
       state.tableData = plantMine(row, cell, mine);
       state.timer = 0;
       state.halted = false;
+      state.result = '';
     },
     [OPEN_CELL](state, { row, cell }) {
-      Vue.set(state.tableData[row], cell, CODE.OPENED);
+      let openedCell = 0;
+      const checkedCell = [];
+      const data = state.tableData;
+
+      function recursiveOpenCell(row, cell) {
+        const isUndefinedRowOrCell = row < 0 || row >= data.length || cell < 0 || cell >= data[0].length;
+
+        if (isUndefinedRowOrCell) {
+          return;
+        }
+
+        if (data[row][cell] !== CODE.NORMAL) {
+          return;
+        }
+
+        if (checkedCell.includes(`${row}/${cell}`)) {
+          return;
+        } else {
+          checkedCell.push(`${row}/${cell}`);
+        }
+
+        const mineCount = checkSurroundingMines(data, row, cell);
+
+        const near = [];
+        if (mineCount === 0 && row > -1) {
+          near.push(...getNearCells(row, cell, data.length));
+
+          near.forEach(d => {
+            if (data[d[0]][d[1]] !== CODE.OPENED) {
+              recursiveOpenCell(d[0], d[1]);
+            }
+          });
+        }
+
+        if (data[row][cell] === CODE.NORMAL) {
+          openedCell += 1;
+        }
+
+        Vue.set(data[row], cell, mineCount);
+      }
+
+      recursiveOpenCell(row, cell);
+
+      state.openedCell += openedCell;
+      if (state.data.row * state.data.cell - state.data.mine === state.openedCell) {
+        state.halted = true;
+        state.result = `${state.timer}초만에 성공했습니다!`;
+      }
     },
-    [CLICK_MINE](state) {
+    [CLICK_MINE](state, { row, cell }) {
+      state.halted = true;
+      state.result = `실패...`;
+      Vue.set(state.tableData[row], cell, CODE.CLICKED_MINE);
     },
     [FLAG_CELL](state, { row, cell }) {
       if (state.tableData[row][cell] === CODE.MINE) {

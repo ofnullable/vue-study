@@ -28,8 +28,7 @@
         this.$store.commit(START_GAME, { row, cell, mine });
       },
     },
-  }
-  ;
+  };
 </script>
 
 <style scoped>

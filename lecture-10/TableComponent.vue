@@ -47,6 +47,8 @@
       },
       cellText: _ => (cellData) => {
         switch (cellData) {
+          case CODE.NORMAL:
+            return '';
           case CODE.MINE:
             return 'X';
           case CODE.CLICKED_MINE:
@@ -58,7 +60,7 @@
           case CODE.QUESTION_MINE:
             return '?';
           default:
-            return '';
+            return cellData || '';
         }
       },
     },
@@ -92,8 +94,7 @@
         }
       },
     },
-  }
-  ;
+  };
 </script>
 
 <style scoped>
