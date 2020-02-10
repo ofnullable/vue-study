@@ -1,31 +1,30 @@
 <template>
   <v-app>
 
-      <v-app-bar app color="primary" hide-on-scroll>
-        <!-- <v-app-bar-nav-icon/> -->
-        <v-toolbar-title>
-          <h1>Bugcamp</h1>
-        </v-toolbar-title>
+    <v-app-bar app color="primary" hide-on-scroll>
+      <!-- <v-app-bar-nav-icon/> -->
+      <v-toolbar-title>
+        <h1>Bugcamp</h1>
+      </v-toolbar-title>
 
-        <v-spacer/>
+      <v-spacer/>
 
-        <!-- Add right menu items -->
+      <!-- Add right menu items -->
 
-      </v-app-bar>
+    </v-app-bar>
 
-      <v-content>
-        <v-container sm12 xl8>
-          <router-view/>
-        </v-container>
-      </v-content>
+    <v-content>
+      <v-container sm12 xl8>
+        <router-view/>
+      </v-container>
+    </v-content>
 
-      <v-footer app color="primary"/>
+    <v-footer app color="primary"/>
   </v-app>
 </template>
 
 <script>
-  export default {
-  };
+  export default {};
 </script>
 
 <style>
