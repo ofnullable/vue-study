@@ -47,6 +47,23 @@ module.exports = {
           },
         },
       ],
+    }, {
+      test: /\.(gif|jpe?g|png|svg)$/,
+      use: {
+        loader: 'url-loader',
+        options: {
+          limit: 10000,
+          name: 'static/[name].[hash:8].[ext]',
+        },
+      },
+    }, {
+      test: /\.(gif|jpe?g|png|svg)$/,
+      use: {
+        loader: 'file-loader',
+        options: {
+          name: 'static/[name].[hash:8].[ext]',
+        },
+      },
     }],
   },
   resolve: {
@@ -58,6 +75,9 @@ module.exports = {
     new HtmlWebPackPlugin({
       template: './src/index.html',
       filename: './index.html',
+      minify: {
+        collapseWhitespace: true
+      },
     }),
     ...(isProd ?
             [new MiniCssExtractPlugin({ filename: '[name].css' })] :
@@ -65,7 +85,7 @@ module.exports = {
     ),
   ],
   output: {
-    filename: '[name].js',
+    filename: '[name].[hash:8].js',
     path: path.join(__dirname, 'dist'),
   },
 };
