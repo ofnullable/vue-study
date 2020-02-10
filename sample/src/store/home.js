@@ -6,7 +6,6 @@ const GET_PROGRAMS_REQUEST = 'GET_PROGRAMS_REQUEST';
 const GET_PROGRAMS_SUCCESS = 'GET_PROGRAMS_SUCCESS';
 const GET_PROGRAMS_FAILURE = 'GET_PROGRAMS_FAILURE';
 
-
 const state = {
   programs: {
     data: [],
@@ -46,8 +45,8 @@ const actions = {
 };
 
 const mutations = {
-  [GET_PROGRAMS_REQUEST](state, lastId) {
-    const programs = state.programs;
+  [GET_PROGRAMS_REQUEST](store, lastId) {
+    const programs = store.programs;
     if (lastId === 0) {
       programs.data = [];
     }
@@ -57,13 +56,16 @@ const mutations = {
     programs.lastId = lastId;
   },
   [GET_PROGRAMS_SUCCESS](store, { data, count }) {
-    const programs = state.programs;
+    const programs = store.programs;
     programs.data = data;
     programs.count = count;
     programs.isLoading = false;
   },
   [GET_PROGRAMS_FAILURE](store, error) {
-
+    const programs = store.programs;
+    programs.data = [];
+    programs.error = error;
+    programs.isLoading = false;
   },
 };
 

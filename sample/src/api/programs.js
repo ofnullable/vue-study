@@ -75,6 +75,6 @@ export const getPrograms = lastId => {
           managed: true,
         }],
       });
-    }, 500);
+    }, 1500);
   });
 };

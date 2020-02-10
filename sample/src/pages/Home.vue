@@ -1,19 +1,30 @@
 <template>
-  <div>
-    <v-item-group class="button_group">
-      <v-btn>signin</v-btn>
-      <v-btn>signup</v-btn>
-    </v-item-group>
-  </div>
+  <v-row v-if="programs.length">
+    <program-card v-for="program in programs" :key="program.id" :data="program"/>
+  </v-row>
+  <v-row v-else>
+    <v-col v-for="(_, index) in Array(12)" :key="index" cols="12" sm="6" md="4" lg="3">
+      <skeleton-sheet type="article, actions"/>
+    </v-col>
+  </v-row>
 </template>
 
 <script>
   import { mapGetters } from 'vuex';
   import { GET_PROGRAMS } from '../store/home';
+  import ProgramCard from '../components/program/ProgramCard';
+  import SkeletonSheet from '../components/common/SkeletonSheet';
 
   export default {
+    components: {
+      ProgramCard,
+      SkeletonSheet,
+    },
+    data() {
+      return {};
+    },
     computed: {
-      ...mapGetters(['programs', 'count']),
+      ...mapGetters(['programs']),
     },
     mounted() {
       this.$store.dispatch(GET_PROGRAMS);
@@ -22,7 +33,7 @@
 </script>
 
 <style lang="scss" scoped>
-  .button_group {
+  .link_group {
     text-align: center;
 
     & button + button {

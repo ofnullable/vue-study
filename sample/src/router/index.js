@@ -8,5 +8,6 @@ export default new Router({
     { path: '/', component: () => import('../pages/Home') },
     { path: '/signin', component: () => import('../pages/SignIn') },
     { path: '/signup', component: () => import('../pages/SignUp') },
+    { path: '/detail/:id', component: () => import('../pages/SignUp') },
   ],
 });
