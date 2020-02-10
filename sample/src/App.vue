@@ -1,7 +1,7 @@
 <template>
   <v-app>
 
-    <v-app-bar app color="primary" hide-on-scroll>
+    <v-app-bar app dark color="primary" hide-on-scroll>
       <!-- <v-app-bar-nav-icon/> -->
       <v-toolbar-title>
         <h1>Bugcamp</h1>
@@ -9,7 +9,14 @@
 
       <v-spacer/>
 
-      <!-- Add right menu items -->
+      <div class="link_group">
+        <router-link to="/signin">
+          <v-btn text>signin</v-btn>
+        </router-link>
+        <router-link to="/signup">
+          <v-btn text>signup</v-btn>
+        </router-link>
+      </div>
 
     </v-app-bar>
 
@@ -27,9 +34,13 @@
   export default {};
 </script>
 
-<style>
+<style lang="scss">
   html {
     font-size: 12px;
+  }
+
+  .link_group {
+    text-align: center;
   }
 
   @media (min-width: 1904px) {
