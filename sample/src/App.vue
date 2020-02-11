@@ -4,7 +4,7 @@
     <v-app-bar app dark color="primary" hide-on-scroll>
       <!-- <v-app-bar-nav-icon/> -->
       <v-toolbar-title>
-        <h1>Bugcamp</h1>
+        <router-link to="/" exact><h1 style="color: #fff;">Bugcamp</h1></router-link>
       </v-toolbar-title>
 
       <v-spacer/>
@@ -26,7 +26,7 @@
       </v-container>
     </v-content>
 
-    <v-footer app color="primary"/>
+    <v-footer app padless/>
   </v-app>
 </template>
 
@@ -37,6 +37,10 @@
 <style lang="scss">
   html {
     font-size: 12px;
+  }
+
+  a {
+    text-decoration: none;
   }
 
   .link_group {

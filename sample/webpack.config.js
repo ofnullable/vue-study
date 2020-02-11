@@ -76,7 +76,7 @@ module.exports = {
       template: './src/index.html',
       filename: './index.html',
       minify: {
-        collapseWhitespace: true
+        collapseWhitespace: true,
       },
     }),
     ...(isProd ?
@@ -87,5 +87,16 @@ module.exports = {
   output: {
     filename: '[name].[hash:8].js',
     path: path.join(__dirname, 'dist'),
+  },
+  devServer: {
+    port: 3000,
+    proxy: {
+      '/**': {
+        target: 'http://192.168.10.1:8080',
+        pathRewrite: { '^/api': '' },
+      },
+      changeOrigin: true,
+      secure: false,
+    },
   },
 };
