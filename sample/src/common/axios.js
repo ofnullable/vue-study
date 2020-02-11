@@ -1,11 +1,17 @@
 import axios from 'axios';
 
-import { BASE_API_URL } from '../common/consts';
-
 const instance = axios.create({
-  baseURL: BASE_API_URL,
+  baseURL: '/api',
   withCredentials: true,
 });
+
+export const setAuthHeader = token => {
+  instance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+};
+
+export const clearAuthHeader = () => {
+  instance.defaults.headers.common['Authorization'] = undefined;
+};
 
 // if need axios interceptors, write here
 
