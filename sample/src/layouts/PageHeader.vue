@@ -1,10 +1,10 @@
 <template>
   <v-app-bar app dark color="primary" hide-on-scroll>
     <v-toolbar-title>
-      <router-link to="/" exact><h1 style="color: #fff;">Bugcamp</h1></router-link>
+      <router-link to="/" exact><h1 style="color: #fff;">bugcamp</h1></router-link>
     </v-toolbar-title>
 
-    <v-spacer/>
+    <VSpacer/>
 
     <div v-if="!isAuthenticated" class="link_group">
       <router-link to="/signin">

@@ -19,7 +19,7 @@
       </v-card-text>
 
       <v-card-actions>
-        <v-spacer/>
+        <VSpacer/>
         <v-btn small text color="primary">submit report</v-btn>
       </v-card-actions>
     </v-card>

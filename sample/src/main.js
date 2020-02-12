@@ -10,7 +10,8 @@ import store from './store';
 import App from './App';
 
 router.beforeEach((to, from, next) =>
-    Promise.all([store.dispatch(CHECK_AUTH)]).then(next));
+    Promise.all([store.dispatch(CHECK_AUTH)])
+        .then(_ => next()));
 
 Vue.config.productionTip = false;
 

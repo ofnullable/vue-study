@@ -4,7 +4,7 @@
 
     <v-content>
       <v-container sm12 xl8>
-        <slot/>
+        <slot></slot>
       </v-container>
     </v-content>
 

@@ -1,6 +1,6 @@
 <template>
   <app-layout>
-    <router-view/>
+    <RouterView/>
   </app-layout>
 </template>
 
@@ -8,6 +8,7 @@
   import AppLayout from './layouts/AppLayout';
 
   export default {
+    name: 'app',
     components: {
       AppLayout,
     },
@@ -21,5 +22,9 @@
 
   a {
     text-decoration: none;
+  }
+
+  img {
+    max-width: 100%;
   }
 </style>
