@@ -7,7 +7,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const isProd = process.env.NODE_ENV === 'production';
 
 module.exports = {
-  devtool: 'source-map',
+  devtool: isProd ? 'hidden-source-map' : 'eval',
   entry: {
     app: path.join(__dirname, 'src/main.js'),
   },
@@ -28,42 +28,37 @@ module.exports = {
         loader: 'babel-loader',
       },
     }, {
-      test: /\.css$/,
+      test: /\.(sc|sa|c)ss$/,
       use: [
         isProd ?
             MiniCssExtractPlugin.loader : 'vue-style-loader',
         'css-loader',
-      ],
-    }, {
-      test: /\.s(c|a)ss$/,
-      use: [
-        'vue-style-loader',
-        'css-loader',
+        'postcss-loader',
         {
           loader: 'sass-loader',
           options: {
             implementation: require('sass'),
-            sassOptions: { fiber: require('fibers') },
+            sassOptions: {
+              fiber: require('fibers'),
+            },
           },
         },
       ],
     }, {
-      test: /\.(gif|jpe?g|png|svg)$/,
-      use: {
+      test: /\.(gif|jpe?g|png|svg)$/i,
+      use: [{
         loader: 'url-loader',
         options: {
-          limit: 10000,
-          name: 'static/[name].[hash:8].[ext]',
+          limit: 8192,
+          esModule: false,
+          name(_) {
+            if (isProd) {
+              return 'images/[name].[ext]?[hash]';
+            }
+            return '[path][name].[ext]?[hash]';
+          },
         },
-      },
-    }, {
-      test: /\.(gif|jpe?g|png|svg)$/,
-      use: {
-        loader: 'file-loader',
-        options: {
-          name: 'static/[name].[hash:8].[ext]',
-        },
-      },
+      }],
     }],
   },
   resolve: {
@@ -80,18 +75,18 @@ module.exports = {
       },
     }),
     ...(isProd ?
-            [new MiniCssExtractPlugin({ filename: '[name].css' })] :
+            [new MiniCssExtractPlugin({ filename: '[hash].[name].css' })] :
             []
     ),
   ],
   output: {
-    filename: '[name].[hash:8].js',
+    filename: '[hash].[name].js',
     path: path.join(__dirname, 'dist'),
   },
   devServer: {
     port: 3000,
     proxy: {
-      '/**': {
+      '/api': {
         target: 'http://192.168.10.1:8080',
         pathRewrite: { '^/api': '' },
       },
