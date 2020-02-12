@@ -12,6 +12,8 @@ import App from './App';
 router.beforeEach((to, from, next) =>
     Promise.all([store.dispatch(CHECK_AUTH)]).then(next));
 
+Vue.config.productionTip = false;
+
 new Vue({
   store,
   router,
