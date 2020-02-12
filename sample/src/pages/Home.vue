@@ -1,10 +1,10 @@
 <template>
   <v-row v-if="programs.length">
-    <program-card v-for="program in programs" :key="program.id" :data="program"/>
+    <ProgramCard v-for="program in programs" :key="program.id" :data="program"/>
   </v-row>
   <v-row v-else>
     <v-col v-for="(_, index) in Array(12)" :key="index" cols="12" sm="6" md="4" lg="3">
-      <skeleton-sheet type="article, actions"/>
+      <SkeletonSheet type="article, actions"/>
     </v-col>
   </v-row>
 </template>
@@ -16,12 +16,10 @@
   import SkeletonSheet from '../components/common/SkeletonSheet';
 
   export default {
+    name: 'home',
     components: {
       ProgramCard,
       SkeletonSheet,
-    },
-    data() {
-      return {};
     },
     computed: {
       ...mapGetters(['programs']),

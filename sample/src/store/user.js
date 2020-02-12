@@ -20,10 +20,10 @@ const state = {
 
 const getters = {
   currentUser(state) {
-    return state.user.data;
+    return state.data;
   },
   isAuthenticated(state) {
-    return state.user.isAuthenticated;
+    return state.isAuthenticated;
   },
 };
 
