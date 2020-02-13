@@ -7,3 +7,11 @@ export const authRequest = data => {
 export const getUser = () => {
   return axios.get(`/user`);
 };
+
+export const hackerSignUp = payload => {
+  return axios.post('/hacker', payload);
+};
+
+export const vendorSignUp = payload => {
+  return axios.post('/vendor', payload);
+};

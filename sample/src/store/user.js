@@ -1,16 +1,16 @@
 import { authRequest, getUser } from '../api/user';
 import { setAuthHeader } from '../common/axios';
-import { getToken, setToken, removeToken } from '../common/auth';
+import { getToken, removeToken, setToken } from '../common/auth';
 
 export const SIGN_IN = 'SIGN_IN';
 
-const AUTH_REQUEST = 'AUTH_REQUEST';
-const SET_AUTH = 'SET_AUTH';
-const SET_ERROR = 'SET_ERROR';
-const PURGE_AUTH = 'PURGE_AUTH';
+const SIGN_IN_REQUEST = 'SIGN_IN_REQUEST';
+const SIGN_IN_SUCCESS = 'SIGN_IN_SUCCESS';
+const SIGN_IN_FAILURE = 'SIGN_IN_FAILURE';
 
 export const CHECK_AUTH = 'CHECK_AUTH';
 
+const PURGE_AUTH = 'PURGE_AUTH';
 
 const state = {
   data: {},
@@ -25,30 +25,25 @@ const getters = {
   isAuthenticated(state) {
     return state.isAuthenticated;
   },
+  signInError(state) {
+    return state.error;
+  },
 };
 
 const actions = {
   [SIGN_IN]({ commit }, { username, password }) {
-    commit(AUTH_REQUEST);
+    commit(SIGN_IN_REQUEST);
     return authRequest({ username, password })
-        .then(data => {
-          commit(SET_AUTH, data);
-        })
-        .catch(error => {
-          commit(PURGE_AUTH, error);
-        });
+        .then(data => commit(SIGN_IN_SUCCESS, data))
+        .catch(error => commit(SIGN_IN_FAILURE, error));
   },
   [CHECK_AUTH]({ commit }) {
     const token = getToken();
     if (token) {
       setAuthHeader(token);
       return getUser()
-          .then(data => {
-            commit(SET_AUTH, { data, token });
-          })
-          .catch(error => {
-            commit(SET_ERROR, error);
-          });
+          .then(data => commit(SIGN_IN_SUCCESS, { data, token }))
+          .catch(error => commit(SIGN_IN_FAILURE, error));
     } else {
       commit(PURGE_AUTH);
     }
@@ -56,17 +51,19 @@ const actions = {
 };
 
 const mutations = {
-  [SET_ERROR](state, error) {
-    state.error = error;
-  },
-  [AUTH_REQUEST](state) {
+  [SIGN_IN_REQUEST](state) {
     state.error = {};
     state.isAuthenticated = false;
   },
-  [SET_AUTH](state, { data, token }) {
+  [SIGN_IN_SUCCESS](state, { data, token }) {
     state.data = data;
     state.isAuthenticated = true;
     setToken(token);
+  },
+  [SIGN_IN_FAILURE](state, e) {
+    const status = e.response?.status;
+    const response = e.response?.data;
+    state.error = { status, response };
   },
   [PURGE_AUTH](state, error) {
     state.data = {};
