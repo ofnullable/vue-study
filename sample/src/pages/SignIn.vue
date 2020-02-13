@@ -7,9 +7,28 @@
 
           <v-card-title>sign in</v-card-title>
           <v-card-text>
-            <v-form @submit.prevent="handleSubmit">
-              <VTextField label="username" name="username" prepend-icon="person" type="text" v-model="username"/>
-              <VTextField label="password" name="password" prepend-icon="lock" type="password" v-model="password"/>
+            <v-form
+                ref="form"
+                v-model="valid"
+                @submit.prevent="handleSignIn">
+              <v-text-field
+                  type="text"
+                  label="username"
+                  name="username"
+                  prepend-icon="person"
+                  v-model="username"
+                  :rules="usernameRules"
+                  required
+              ></v-text-field>
+              <v-text-field
+                  label="password"
+                  name="password"
+                  prepend-icon="lock"
+                  type="password"
+                  v-model="password"
+                  :rules="passwordRules"
+                  required
+              ></v-text-field>
 
               <v-card-actions style="flex-direction: column;">
                 <v-btn block color="primary" type="submit">sign in</v-btn>
@@ -32,19 +51,44 @@
   export default {
     name: 'signin',
     computed: {
-      ...mapGetters(['isAuthenticated']),
+      ...mapGetters(['isAuthenticated', 'signInError']),
     },
     data() {
       return {
+        valid: false,
+
         username: '',
         password: '',
+
+        usernameRules: [v => !!v || '아이디를 입력해주세요.'],
+        passwordRules: [v => !!v || '비밀번호를 입력해주세요.'],
       };
     },
     methods: {
-      handleSubmit() {
+      formReset() {
+        this.$refs.form.reset();
+      },
+      handleSignIn() {
+        if (!this.$refs.form.validate()) {
+          return;
+        }
         const { username, password } = this;
         this.$store.dispatch(SIGN_IN, { username, password });
+
+        this.formReset();
       },
+    },
+    watch: {
+      isAuthenticated(value) {
+        if (value) {
+          this.$router.push('/');
+        }
+      },
+    },
+    beforeMount() {
+      if (this.isAuthenticated) {
+        this.$router.go(-1);
+      }
     },
   };
 </script>
@@ -55,11 +99,11 @@
     text-transform: uppercase;
     font-size: 3rem;
     font-weight: bolder;
-    padding: 5rem 0;
+    padding: 3rem 0;
   }
 
   p {
     color: gray;
-    margin: 0.5rem 0;
+    margin: 1rem 0;
   }
 </style>
